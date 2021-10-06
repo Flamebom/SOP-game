@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -16,19 +17,24 @@ public class MainGame extends JFrame {
 	static String vararray[];
 	static String graycodex[];	
 	static String graycodey[];
-	static int[][] allp1input = new int[1000][2];
+	static int[][] allp1input = new int[9999][2];
 	static int p1counter = 0;
-	static int[][] allp2input = new int[1000][2];
+	static int[][] allp2input = new int[9999][2];
 	static int p2counter = 0;
 	static String player1;
 	static String player2;
 
 //draw the grid
+	
 	MainGame() {
-		setSize(1000, 1000);
+		setSize(1920, 1080);
+		JScrollBar s=new JScrollBar();  
+		s.setBounds(100,100, 50,100);  
+		add(s);
 		setTitle("Quantum Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	
 		panelinput.add(textinput);
 		add(panelinput);
 		textinput.addKeyListener(new KeyListener() {
@@ -54,7 +60,8 @@ public class MainGame extends JFrame {
 
 	// User input
 	public static void main(String[] args) throws InterruptedException {
-
+	
+	
 		for (int i = 0; i < allp1input.length; i++) {
 			Arrays.fill(allp1input[i], -1);
 			Arrays.fill(allp2input[i], -2);
