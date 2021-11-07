@@ -88,12 +88,16 @@ public class QuantumMap {
 		for (int i = 0; i < OutputString.size(); i++) {
 			String[] element = OutputString.get(i).split(",");
 			output[i][0] = Integer.parseInt(element[0]);
-			output[i][1]= Integer.parseInt(element[1]);
-		
+			output[i][1] = Integer.parseInt(element[1]);
+
 		}
 		return output;
 	}
 
+	/*
+	 * 0 = uncontested 0 1 = Uncontested 1 2= p1 1 3 = p2 1 4 = p1 0 5 = p2 0 6= do
+	 * not care
+	 */
 	static void makeplaymap() {
 		playmap = new int[MainGame.map.length][];
 		for (int i = 0; i < MainGame.map.length; i++) {
@@ -101,8 +105,8 @@ public class QuantumMap {
 		}
 		for (int i = 0; i < playmap.length; i++) {
 			for (int j = 0; j < playmap[i].length; j++) {
-				if (playmap[i][j] != 1) {
-					playmap[i][j] = 0;
+				if (playmap[i][j] == 2) {
+					playmap[i][j] = 6;
 				}
 			}
 		}
@@ -112,6 +116,8 @@ public class QuantumMap {
 	static void calculatescore(Graphics g) {
 		int p1allsquares = 0;
 		int p2allsquares = 0;
+		boolean p1zero = false;
+		boolean p2zero = false;
 		for (int i = 0; i < playmap.length; i++) {
 			for (int j = 0; j < playmap[i].length; j++) {
 				if (playmap[i][j] == 2) {
@@ -119,16 +125,37 @@ public class QuantumMap {
 
 				} else if (playmap[i][j] == 3) {
 					p2allsquares++;
+				} else if (playmap[i][j] == 4) {
+					p1zero = true;
+				} else if (playmap[i][j] == 5) {
+					p2zero = true;
 				}
 			}
 		}
+
 		g.clearRect(90, 0, 600, 70);
 		g.setFont(new Font("TimesRoman", Font.BOLD, 22));
-		g.setColor(Color.RED);
 
-		g.drawString(MainGame.player1 + ":" + p1allsquares, 100, 50);
-		g.setColor(Color.BLUE);
-		g.drawString(MainGame.player2 + ":" + p2allsquares, 100, 69);
+		if (!p1zero && !p2zero) {
+			g.setColor(Color.RED);
+			g.drawString(MainGame.player1 + ":" + p1allsquares, 100, 50);
+			g.setColor(Color.BLUE);
+			g.drawString(MainGame.player2 + ":" + p2allsquares, 100, 69);
+		}
+		else if (p1zero && !p2zero) {
+			g.setColor(Color.YELLOW);
+			g.drawString(MainGame.player2 + " won by smart opponent", 100, 50);
+			g.setColor(Color.GRAY);
+			g.drawString(MainGame.player1 + " lost by taking a zero", 100, 69);
+		} else if (p2zero && !p1zero) {
+			g.setColor(Color.YELLOW);
+			g.drawString(MainGame.player1 + " won by smart opponent", 100, 50);
+			g.setColor(Color.GRAY);
+			g.drawString(MainGame.player2 + " lost by taking a zero", 100, 69);
+		} else  {
+			g.setColor(Color.GREEN);
+			g.drawString("Top 2 smartest people alive: "+ MainGame.player1  + ", "+MainGame.player2 , 100, 50);
+		}
 	}
 
 }

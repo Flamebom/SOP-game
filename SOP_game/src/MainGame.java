@@ -12,6 +12,7 @@ public class MainGame extends JFrame {
 	// variable deceleration
 	static String playerinput = "";
 	static int variables = 0;
+	static boolean start = false;
 	static int mapscale = 1;
 	static int map[][];
 	static String vararray[];
@@ -56,44 +57,15 @@ public class MainGame extends JFrame {
 
 	// User input
 	public static void main(String[] args) throws InterruptedException {
-
-		for (int i = 0; i < allp1input.length; i++) {
-			Arrays.fill(allp1input[i], -1);
-			Arrays.fill(allp2input[i], -2);
+		Config c = new Config();
+		c.repaint();
+		while (!start) {
+			Thread.sleep(1000);
 		}
-		Scanner input = new Scanner(System.in);
-		System.out.println("Number of variables:");
-		variables = input.nextInt();
-		if (variables >= 8) {
-			mapscale = 2;
-		}
-		System.out.println("Number of 0s:");
-		int zeroes = input.nextInt();
-		System.out.println("Number of 1s:");
-		int ones = input.nextInt();
-		System.out.println("Player 1 Name");
-		player1 = input.next();
-		System.out.println("Player 2 Name");
-		player2 = input.next();
-		// dimensions
-		int[] variablearray = Helpers.variablesplit();
-		// variable strings
-		vararray = Helpers.variables(variablearray);
-		// Gray code strings
-		graycodex = Helpers.graycodegenerator(variablearray[0]);
-		graycodey = Helpers.graycodegenerator(variablearray[1]);
-		// map creation
-		QuantumMap.createtheoryitcalmap(graycodex, graycodey);
-		map = QuantumMap.createmap(variables, zeroes, ones, variablearray);
-		QuantumMap.makeplaymap();
 		MainGame m = new MainGame();
 		m.repaint();
 		boolean flag = false;
 		int turn = 1;
-
-		input.close();
-		// P1input/P2input
-
 		while (!flag) {
 			Thread.sleep(700);
 			if (!playerinput.equals("") && turn == 1) {
@@ -107,6 +79,35 @@ public class MainGame extends JFrame {
 			}
 
 		}
+	}
+
+	public static void intialize(int pvariables, int pzeroes, int pones, String pplayer1, String pplayer2)
+			throws InterruptedException {
+		for (int i = 0; i < allp1input.length; i++) {
+			Arrays.fill(allp1input[i], -1);
+			Arrays.fill(allp2input[i], -2);
+		}
+		variables = pvariables;
+		if (variables >= 8) {
+			mapscale = 2;
+		}
+		int zeroes = pzeroes;
+		int ones = pones;
+		player1 = pplayer1;
+		player2 = pplayer2;
+		// dimensions
+		int[] variablearray = Helpers.variablesplit();
+		// variable strings
+		vararray = Helpers.variables(variablearray);
+		// Gray code strings
+		graycodex = Helpers.graycodegenerator(variablearray[0]);
+		graycodey = Helpers.graycodegenerator(variablearray[1]);
+		// map creation
+		QuantumMap.createtheoryitcalmap(graycodex, graycodey);
+		map = QuantumMap.createmap(variables, zeroes, ones, variablearray);
+		QuantumMap.makeplaymap();
+
+		start = true;
 
 	}
 
@@ -152,7 +153,14 @@ public class MainGame extends JFrame {
 			}
 		}
 	}
-
+/*0 = uncontested 0
+1 = Uncontested 1
+2= p1 1
+3 = p2 1
+4 = p1 0
+5 = p2 0
+6= do not care
+*/
 	public static void play1(Graphics g, int[][] inputarray, Color color) {
 		for (int i = 0; i < inputarray.length; i++) {
 			allp1input[i + p1counter][0] = inputarray[i][0];
@@ -162,6 +170,10 @@ public class MainGame extends JFrame {
 			if (QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 1
 					|| QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 3) {
 				QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] = 2;
+			}
+			if (QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 0
+					|| QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 5) {
+				QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] = 4;
 			}
 		}
 		p1counter += inputarray.length;
@@ -194,6 +206,10 @@ public class MainGame extends JFrame {
 			if (QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 1
 					|| QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 2) {
 				QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] = 3;
+			}
+			if (QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 0
+					|| QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] == 4) {
+				QuantumMap.playmap[inputarray[i][1]][inputarray[i][0]] = 5;
 			}
 		}
 		p2counter += inputarray.length;
