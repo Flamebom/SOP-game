@@ -144,12 +144,12 @@ public class QuantumMap {
 		}
 		else if (p1zero && !p2zero) {
 			g.setColor(Color.YELLOW);
-			g.drawString(MainGame.player2 + " won by smart opponent", 100, 50);
+			g.drawString(MainGame.player2 + " won by opponent mistake", 100, 50);
 			g.setColor(Color.GRAY);
 			g.drawString(MainGame.player1 + " lost by taking a zero", 100, 69);
 		} else if (p2zero && !p1zero) {
 			g.setColor(Color.YELLOW);
-			g.drawString(MainGame.player1 + " won by smart opponent", 100, 50);
+			g.drawString(MainGame.player1 + " won by opponent mistake", 100, 50);
 			g.setColor(Color.GRAY);
 			g.drawString(MainGame.player2 + " lost by taking a zero", 100, 69);
 		} else  {
