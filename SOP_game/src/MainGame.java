@@ -29,7 +29,7 @@ public class MainGame extends JFrame {
 
 	MainGame() {
 		setSize(1920, 1080);
-		setTitle("Quantum Map");
+		setTitle("Sum of Products Karnaugh Map Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		panelinput.add(textinput);
