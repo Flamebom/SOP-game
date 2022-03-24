@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 public class Help extends JFrame {
 	Help() throws IOException {
 		
-		ImageIcon help = new ImageIcon("/resources/help.PNG");
+		ImageIcon help = new ImageIcon(Help.class.getResource("/resources/help.PNG"));
 	JLabel image = new JLabel();
 	JPanel helppanel = new JPanel();
 	image.setIcon(help);
