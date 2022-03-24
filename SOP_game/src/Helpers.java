@@ -6,9 +6,9 @@ public class Helpers {
 //checks if it is not or regular statement
 		for (int i = 0; i < input.length(); i++) {
 			int additive = 1;
-			if (input.charAt(i) == '~') {
+			if (input.charAt(i) == '~' || input.charAt(i) =='!') {
 				additive = 2;
-				i++;
+				i++;	
 			}
 			output[input.charAt(i) - 'A'] = additive;
 		}

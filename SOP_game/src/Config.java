@@ -1,8 +1,10 @@
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ public class Config extends JFrame {
 
 	Config() {
 		JButton confirm = new JButton("Confirm");
+		JButton help = new JButton("Help");
 		JPanel panelinput = new JPanel();
 
 		JLabel labelinput = new JLabel("Configuration");
@@ -28,28 +31,28 @@ public class Config extends JFrame {
 		JLabel zeroes = new JLabel("Number of Zeroes");
 		JLabel p1 = new JLabel("Player 1 Name");
 		JLabel p2 = new JLabel("Player 2 Name");
-		labelinput.setVerticalTextPosition(JLabel.TOP);
-		labelinput.setHorizontalTextPosition(JLabel.CENTER);
 		JTextField variables = new JTextField();
 		JTextField numberof0s = new JTextField();
 		JTextField numberof1s = new JTextField();
 		JTextField player1name = new JTextField();
 		JTextField player2name = new JTextField();
 	
-
+JPanel buttonpanelinput = new JPanel(new GridLayout(1,2));
 		panelinput.setLayout(new BoxLayout(panelinput, BoxLayout.Y_AXIS));
-		panelinput.add(labelinput);
+		panelinput.add(labelinput);	
 		panelinput.add(vars);
 		panelinput.add(variables);
 		panelinput.add(zeroes);
 		panelinput.add(numberof0s);
 		panelinput.add(ones);
 		panelinput.add(numberof1s);
+	
 		panelinput.add(p1);
 		panelinput.add(player1name);
 		panelinput.add(p2);
 		panelinput.add(player2name);
-		panelinput.add(confirm);
+		buttonpanelinput.add(confirm);
+		buttonpanelinput.add(help);
 		confirm.addActionListener(new ActionListener() {
 
 			@Override
@@ -71,11 +74,24 @@ public class Config extends JFrame {
 
 			}
 		});
+		help.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			Help h;
+			try {
+				h = new Help();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+			}
+		});
 		add(panelinput);
-
+panelinput.add(buttonpanelinput);
 		setSize(400, 300);
 		setTitle("Configuration");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 
 		;
