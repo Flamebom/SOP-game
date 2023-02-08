@@ -12,7 +12,7 @@ public class QuantumMap {
 	static int playmap[][];
 
 	// class of quantum map related stuff
-	static int[][] createmap(int variables, int zeroes, int ones, int[] variablesplit) {
+	static int[][] createmap( int zeroes, int ones, int[] variablesplit) {
 		// dimensions are variables to power of 2
 		dimy = (int) Math.pow(2, variablesplit[0]);
 		dimx = (int) Math.pow(2, variablesplit[1]);

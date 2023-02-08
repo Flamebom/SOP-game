@@ -57,6 +57,16 @@ public class MainGame extends JFrame {
 
 	// User input
 	public static void main(String[] args) throws InterruptedException {
+		// Uncomment for when playing actual game
+//startandplaygame();
+		int cyclic = 0;
+		for (int i = 0; i < 100; i++) {
+			cyclic += KarnaughMapCheckingTools.isCyclic(7, 100);
+		}
+System.out.println(cyclic);
+	}
+
+	private static void startandplaygame() throws InterruptedException {
 		Config c = new Config();
 		c.repaint();
 		while (!start) {
@@ -104,7 +114,7 @@ public class MainGame extends JFrame {
 		graycodey = Helpers.graycodegenerator(variablearray[1]);
 		// map creation
 		QuantumMap.createtheoryitcalmap(graycodex, graycodey);
-		map = QuantumMap.createmap(variables, zeroes, ones, variablearray);
+		map = QuantumMap.createmap(zeroes, ones, variablearray);
 		QuantumMap.makeplaymap();
 
 		start = true;
@@ -153,14 +163,11 @@ public class MainGame extends JFrame {
 			}
 		}
 	}
-/*0 = uncontested 0
-1 = Uncontested 1
-2= p1 1
-3 = p2 1
-4 = p1 0
-5 = p2 0
-6= do not care
-*/
+
+	/*
+	 * 0 = uncontested 0 1 = Uncontested 1 2= p1 1 3 = p2 1 4 = p1 0 5 = p2 0 6= do
+	 * not care
+	 */
 	public static void play1(Graphics g, int[][] inputarray, Color color) {
 		for (int i = 0; i < inputarray.length; i++) {
 			allp1input[i + p1counter][0] = inputarray[i][0];
