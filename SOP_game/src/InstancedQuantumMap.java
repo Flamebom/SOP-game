@@ -92,7 +92,7 @@ public class InstancedQuantumMap {
 		int y = variables / 2;
 		// odd case
 		if (variables % 2 != 0) {
-			x= variables / 2 + 1;
+			y= variables / 2 + 1;
 		}
 		int[] dimensions = { x, y };
 		return dimensions;

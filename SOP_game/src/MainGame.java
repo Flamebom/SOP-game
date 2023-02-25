@@ -57,6 +57,17 @@ public class MainGame extends JFrame {
 
 	// User input
 	public static void main(String[] args) throws InterruptedException {
+		// Uncomment for when playing actual game
+//startandplaygame();
+		int cyclic = 0;
+		for (int i = 0; i < 1000; i++) {
+			cyclic += KarnaughMapCheckingTools.isCyclic(7,100);
+			//cyclic += KarnaughMapCheckingTools.isCyclic(4,10);
+		}
+		System.out.println(cyclic);
+	}
+
+	private static void startandplaygame() throws InterruptedException {
 		Config c = new Config();
 		c.repaint();
 		while (!start) {
@@ -104,11 +115,53 @@ public class MainGame extends JFrame {
 		graycodey = Helpers.graycodegenerator(variablearray[1]);
 		// map creation
 		QuantumMap.createtheoryitcalmap(graycodex, graycodey);
-		map = QuantumMap.createmap(variables, zeroes, ones, variablearray);
+		map = QuantumMap.createmap(zeroes, ones, variablearray);
 		QuantumMap.makeplaymap();
 
 		start = true;
 
+	}
+
+	public static void intializeconstantandthink(int pvariables, int nmap[][]) throws InterruptedException {
+		for (int i = 0; i < allp1input.length; i++) {
+			Arrays.fill(allp1input[i], -1);
+			Arrays.fill(allp2input[i], -2);
+		}
+		variables = pvariables;
+		if (variables >= 8) {
+			mapscale = 2;
+		}
+		player1 = "test1";
+		player2 = "test2";
+		// dimensions
+		int[] variablearray = Helpers.variablesplit();
+		// variable strings
+		vararray = Helpers.variables(variablearray);
+		graycodex = Helpers.graycodegenerator(variablearray[0]);
+		graycodey = Helpers.graycodegenerator(variablearray[1]);
+		// map creation
+		QuantumMap.createtheoryitcalmap(graycodex, graycodey);
+		map = nmap;
+		QuantumMap.makeplaymap();
+		start = true;
+		MainGame m = new MainGame();
+		m.repaint();
+		int turn = 1;
+		boolean flag = false;
+		while (!flag) {
+			Thread.sleep(700);
+			if (!playerinput.equals("") && turn == 1) {
+				play1(m.getGraphics(), Helpers.play(playerinput, turn), Color.RED);
+				turn = 2;
+			}
+			Thread.sleep(700);
+			if (!playerinput.equals("") && turn == 2) {
+				play2(m.getGraphics(), Helpers.play(playerinput, turn), Color.BLUE);
+				turn = 1;
+			}
+
+		}
+	
 	}
 
 	// paint the grid
@@ -138,7 +191,7 @@ public class MainGame extends JFrame {
 		}
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
-				g.drawRect(i * 100 / mapscale + 100, j * 100 / mapscale + 100, 100 / mapscale, 100 / mapscale);
+				g.drawRect(j* 100 / mapscale + 100,  i* 100 / mapscale + 100, 100 / mapscale, 100 / mapscale);
 				String temp;
 				if (map[i][j] == 2) {
 					temp = "-";
@@ -146,21 +199,23 @@ public class MainGame extends JFrame {
 					temp = Integer.toString(map[i][j]);
 				}
 				if (mapscale == 1) {
-					g.drawString(temp, i * 100 / mapscale + 140, j * 100 / mapscale + 170);
+					g.drawString(temp, j * 100 / mapscale + 140, i * 100 / mapscale + 170);
 				} else {
-					g.drawString(temp, i * 100 / mapscale + 120, j * 100 / mapscale + 140);
+					g.drawString(temp, j * 100 / mapscale + 120, i * 100 / mapscale + 140);
 				}
 			}
 		}
 	}
-/*0 = uncontested 0
-1 = Uncontested 1
-2= p1 1
-3 = p2 1
-4 = p1 0
-5 = p2 0
-6= do not care
-*/
+
+	/*
+	 * 0 = uncontested 0 
+	 * 1 = Uncontested 1
+	 *  2= p1 1 
+	 *  3 = p2 1 
+	 *  4 = p1 0
+	 *   5 = p2 0
+	 *    6= do not care
+	 */
 	public static void play1(Graphics g, int[][] inputarray, Color color) {
 		for (int i = 0; i < inputarray.length; i++) {
 			allp1input[i + p1counter][0] = inputarray[i][0];
@@ -188,7 +243,7 @@ public class MainGame extends JFrame {
 		}
 		for (int i = 0; i < allp1input.length; i++) {
 			if (allp1input[i][0] != -1) {
-				g.fillRect(allp1input[i][1] * 100 / mapscale + 101, allp1input[i][0] * 100 / mapscale + 101,
+				g.fillRect(allp1input[i][0] * 100 / mapscale + 101, allp1input[i][1] * 100 / mapscale + 101,
 						25 / mapscale, 25 / mapscale);
 			} else {
 				continue;
@@ -226,7 +281,7 @@ public class MainGame extends JFrame {
 		for (int i = 0; i < allp2input.length; i++) {
 			if (allp2input[i][0] != -2) {
 
-				g.fillRect(allp2input[i][1] * 100 / mapscale + 101, allp2input[i][0] * 100 / mapscale + 101,
+				g.fillRect(allp2input[i][0] * 100 / mapscale + 101, allp2input[i][1] * 100 / mapscale + 101,
 						25 / mapscale, 25 / mapscale);
 
 			} else {

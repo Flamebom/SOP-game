@@ -12,7 +12,7 @@ public class QuantumMap {
 	static int playmap[][];
 
 	// class of quantum map related stuff
-	static int[][] createmap(int variables, int zeroes, int ones, int[] variablesplit) {
+	static int[][] createmap( int zeroes, int ones, int[] variablesplit) {
 		// dimensions are variables to power of 2
 		dimy = (int) Math.pow(2, variablesplit[0]);
 		dimx = (int) Math.pow(2, variablesplit[1]);
@@ -67,15 +67,15 @@ public class QuantumMap {
 
 	static int[][] inputtoanswer(String input) {
 		ArrayList<String> OutputString = new ArrayList<String>();
-		for (int i = 0; i < theorymap[0].length; i++) {
-			loop: for (int j = 0; j < theorymap.length; j++) {
+		for (int i = 0; i < theorymap.length; i++) {
+			loop: for (int j = 0; j < theorymap[0].length; j++) {
 				for (int k = 0; k < input.length(); k++) {
 					if (input.charAt(k) != '0') {
 						char charinput = input.charAt(k);
 						if (charinput == '2') {
 							charinput = '0';
 						}
-						if (charinput != theorymap[j][i].charAt(k)) {
+						if (charinput != theorymap[i][j].charAt(k)) {
 							continue loop;
 						}
 					}
